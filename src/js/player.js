@@ -10,47 +10,57 @@ define([
     var buffers = {
         kick: null,
         snare: null,
+        clap: null,
         closehh: null,
         openhh: null,
-        tom1: null,
-        tom2: null,
-        tom3: null
+        rim: null,
+        tom: null,
+        sound1:null,
+        sound2:null
     };
 
     var kick = function (vel) {
-        playSound(buffers.kick, vel);
+        playSound(buffers.kick, vel, false);
     };
 
     var snare = function (vel) {
-        playSound(buffers.snare, vel);
+        playSound(buffers.snare, vel, false);
     };
 
 
     var closehh = function (vel) {
-        playSound(buffers.closehh, vel);
+        playSound(buffers.closehh, vel, false);
     };
 
 
     var openhh = function (vel) {
-        playSound(buffers.openhh, vel);
+        playSound(buffers.openhh, vel, false);
     };
 
 
     var tom1 = function (vel) {
-
+        playSound(buffers.openhh, vel, false);
     };
 
 
     var tom2 = function (vel) {
-
+        playSound(buffers.openhh, vel, false);
     };
 
 
     var tom3 = function (vel) {
-
+        playSound(buffers.openhh, vel, false);
     };
 
-    function playSound(buffer,vel) {
+    var sound1 = function(pitch) {
+        playSound(buffers.sound1, pitch, pitch );
+    }
+
+    var sound2 = function(pitch) {
+        playSound(buffers.sound2, pitch, pitch );  
+    }
+
+    function playSound(buffer,vel, pitch) {
 
         if (vel == 0) {
             return;
@@ -60,6 +70,11 @@ define([
         var gainNode = context.createGain();
 
         source.buffer = buffer;
+
+        if (pitch) {
+            source.playbackRate.value = 1 + pitch;
+        }
+
 
         source.connect(gainNode);
         gainNode.gain.value = vel;
@@ -97,7 +112,6 @@ define([
                     console.log('setting up the playing state');
                 },
                 execute: function() {
-                    //console.log(_sequence);
                     console.log('playing!');
 
                     var i = 0;
@@ -106,22 +120,29 @@ define([
 
                     kick(_sequence.kick[i]);
                     snare(_sequence.snare[i]);
-                    closehh(_sequence.closehh[i]);
-                    openhh(_sequence.openhh[i]);
-                    tom1(_sequence.tom1[i]);
-                    tom2(_sequence.tom2[i]);
-                    tom3(_sequence.tom3[i]);
+                    closehh(_sequence.clap[i]);
+                    openhh(_sequence.closehh[i]);
+                    tom1(_sequence.openhh[i]);
+                    tom2(_sequence.rim[i]);
+                    tom3(_sequence.tom[i]); 
+                    sound1(_sequence.sound1[i]);
+                    sound2(_sequence.sound2[i]);
+
                     i++;
 
                     seqInterval = setInterval(function () {
 
                         kick(_sequence.kick[i]);
                         snare(_sequence.snare[i]);
-                        closehh(_sequence.closehh[i]);
-                        openhh(_sequence.openhh[i]);
-                        tom1(_sequence.tom1[i]);
-                        tom2(_sequence.tom2[i]);
-                        tom3(_sequence.tom3[i]);
+                        closehh(_sequence.clap[i]);
+                        openhh(_sequence.closehh[i]);
+                        tom1(_sequence.openhh[i]);
+                        tom2(_sequence.rim[i]);
+                        tom3(_sequence.tom[i]); 
+                        sound1(_sequence.sound1[i]);
+                        sound2(_sequence.sound2[i]);
+
+
                         i++;
 
                         if (i === 7) {
@@ -206,11 +227,15 @@ define([
                 alert('Web Audio API is not supported in this browser');
             }
 
-
             loadSound("kick", "sounds/k.wav");
             loadSound("snare", "sounds/s.wav");
-            loadSound("closehh", "sounds/chh.wav");
+            loadSound("clap", "sounds/c.wav");
+            loadSound("closehh", "sounds/hh.wav");
             loadSound("openhh", "sounds/ohh.wav");
+            loadSound("rim", "sounds/r.wav");
+            loadSound("tom", "sounds/t.wav");
+            loadSound("sound1", "sounds/melo1.wav");
+            loadSound("sound2", "sounds/melo2.wav");
 
         },
         play: function(sequence) {
