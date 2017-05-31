@@ -27,7 +27,7 @@ define([
         var xMin = 0;
         var yMax = 0;
         var yMin = 765;
-        
+
         for (var i = 0, c =_grid.length; i < c; i++) {
 
             for (var j = 0, cc = _grid[i].length; j < cc; j++) {
