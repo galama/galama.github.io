@@ -53,11 +53,16 @@ define([
 
 
     var sound1 = function(pitch) {
-        buffers.sound1.triggerAttack(pitch, "+0.1", pitch);
+        if (pitch === 0)
+            return;
+
+        buffers.sound1.triggerAttack(pitch+1, "+0.1", pitch+1);
     };
 
     var sound2 = function(pitch) {
-        buffers.sound2.triggerAttack(pitch, "+0.1", pitch);
+        if (pitch === 0)
+            return;
+        buffers.sound2.triggerAttack(pitch+1, "+0.1", pitch+1);
     };
 
 
